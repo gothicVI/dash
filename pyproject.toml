@@ -1,0 +1,135 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dash"
+dynamic = ["version"]
+authors = [{ name = "Chris Parmer", email = "chris@plotly.com" }]
+description = "A Python framework for building reactive web-apps. Developed by Plotly."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.8"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Framework :: Dash",
+    "Framework :: Flask",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Intended Audience :: Healthcare Industry",
+    "Intended Audience :: Manufacturing",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Database :: Front-Ends",
+    "Topic :: Office/Business :: Financial :: Spreadsheet",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Topic :: Software Development :: Widget Sets",
+]
+dependencies = [
+    "Flask>=1.0.4,<3.1",
+    "Werkzeug<3.1",
+    "plotly>=5.0.0",
+    "importlib-metadata",
+    "typing_extensions>=4.1.1",
+    "requests",
+    "retrying",
+    "nest-asyncio",
+    "setuptools"
+]
+
+[project.urls]
+Documentation = "https://dash.plotly.com"
+Source = "https://github.com/plotly/dash"
+"Issue Tracker" = "https://github.com/plotly/dash/issues"
+
+[project.scripts]
+dash-generate-components = "dash.development.component_generator:cli"
+renderer = "dash.development.build_process:renderer"
+dash-update-components = "dash.development.update_components:cli"
+
+[project.entry-points."pytest11"]
+dash = "dash.testing.plugin"
+
+[tool.setuptools]
+packages = { find = { exclude = ["tests*"] } }
+include-package-data = true
+
+[tool.setuptools.dynamic]
+version = { attr = "dash.version.__version__" }
+
+[tool.setuptools.package-data]
+"dash" = ["nbextension/*", "labextension/dist/*"]
+
+[tool.setuptools.data-files]
+"share/jupyter/nbextensions/dash" = ["dash/nbextension/main.js"]
+"etc/jupyter/nbconfig/notebook.d" = ["dash/nbextension/dash.json"]
+"share/jupyter/lab/extensions" = ["dash/labextension/dist/dash-jupyterlab.tgz"]
+
+[project.optional-dependencies]
+# Dependencies used by CI on github.com/plotly/dash
+ci = [
+    "black==22.3.0",
+    "flake8==7.0.0",
+    "flaky==3.8.1",
+    "flask-talisman==1.0.0",
+    "ipython<9.0.0",
+    "mimesis<=11.1.0",
+    "mock==4.0.3",
+    "numpy<=1.26.3",
+    "orjson==3.10.3",
+    "openpyxl",
+    "pandas>=1.4.0",
+    "pyarrow",
+    "pylint==3.0.3",
+    "pytest-mock",
+    "pytest-sugar==0.9.6",
+    "pyzmq==25.1.2",
+    "xlrd>=2.0.1",
+    "pytest-rerunfailures",
+    "jupyterlab<4.0.0",
+    "pyright==1.1.376;python_version>='3.7'"
+]
+# Dependencies used for development new Dash components
+dev = [
+    "coloredlogs>=15.0.1",
+    "fire>=0.4.0",
+    "PyYAML>=5.4.1"
+]
+# Dependencies necessary for utilizing Dash provided testing utilities
+testing = [
+    "beautifulsoup4>=4.8.2",
+    "cryptography",
+    "lxml>=4.6.2",
+    "percy>=2.0.2",
+    "pytest>=6.0.2",
+    "requests[security]>=2.21.0",
+    "selenium>=3.141.0,<=4.2.0",
+    "waitress>=1.4.4",
+    "multiprocess>=0.70.12",
+    "psutil>=5.8.0",
+    "dash_testing_stub>=0.0.2"
+]
+# Dependencies used by the CeleryLongCallbackManager
+celery = [
+    "redis>=3.5.3",
+    "celery[redis]>=5.1.2",
+]
+# Dependencies used by the DiskcacheLongCallbackManager
+diskcache = [
+    "diskcache>=5.2.1",
+    "multiprocess>=0.70.12",
+    "psutil>=5.8.0"
+]
+compress = [
+    "flask-compress"
+]
